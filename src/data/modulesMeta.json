@@ -1,0 +1,119 @@
+[
+  {
+    "id": "week-0",
+    "week": 0,
+    "title": "Foundation: Shuru se Shuru — AI Kya Hai?",
+    "subtitle": "Zero level se AI, Agents aur Search ki basic understanding",
+    "examWeight": "Foundation (1-2 Marks)",
+    "summary": "AI ka matlab machine ko samajhne aur decide karne ki taaqat dena. Is module me hum Agent, Problem Solving, State Space, Manhattan Distance aur Search complexities ko bilkul aasaan Hinglish me samjhenge.",
+    "source": "AI Complete Hinglish Notes (Chapter 0)"
+  },
+  {
+    "id": "week-1",
+    "week": 1,
+    "title": "Week 1: Introduction, Philosophy aur AI ka Landscape",
+    "subtitle": "Intelligent Agents, Turing Test, Winograd Schema & 6 Assumptions",
+    "examWeight": "4-5 Marks (~20% in Quiz 1)",
+    "summary": "AI ka goal, intelligent agent ke 4 lakshan (P-A-P-G), 3 layers (Signal, Neuro-fuzzy, Symbolic), Turing Test vs Winograd Schema Challenge, aur classical search ke 6 simplifying assumptions (SCOAR-D).",
+    "source": "AI Week 1 Hinglish Notes"
+  },
+  {
+    "id": "week-2",
+    "week": 2,
+    "title": "Week 2: State Space Search, DFS, BFS aur DFID",
+    "subtitle": "Blind Search Algorithms, OPEN/CLOSED Lists & Complexity Analysis",
+    "examWeight": "6-7 Marks (~28% in Quiz 1)",
+    "summary": "State space ek implicit graph hai. DFS (stack LIFO), BFS (queue FIFO), NodePair parent tracing, RemoveSeen, b^d complexity, aur DFID (Depth-First Iterative Deepening) jo DFS ki linear memory ke saath BFS ki optimality deta hai.",
+    "source": "Complete Hinglish Notes (Chapter 1) + Master E-Book"
+  },
+  {
+    "id": "week-3",
+    "week": 3,
+    "title": "Week 3: Heuristic Search, Best First & Hill Climbing",
+    "subtitle": "Informed Search, Local Optima, Beam Search, Tabu & Simulated Annealing",
+    "examWeight": "4-6 Marks (~22% in Quiz 1)",
+    "summary": "Heuristic function h(n) search ko direction deta hai. Best First search, Hill Climbing (constant space, lekin local maxima trap), Beam Search, Tabu Search (tenure & aspiration), aur Simulated Annealing (sigmoid acceptance probability).",
+    "source": "Complete Hinglish Notes (Chapters 2 & 4) + Master E-Book"
+  },
+  {
+    "id": "week-4",
+    "week": 4,
+    "title": "Week 4: Population-Based Methods — GA, TSP Heuristics & ACO",
+    "subtitle": "Genetic Algorithms, Crossovers (PMX, CX), Ordinal Rep & Ant Colony",
+    "examWeight": "8-9 Marks (~35% in Quiz 1 — Single Largest Chunk!)",
+    "summary": "Population-based search. Darwinian evolution, Roulette wheel selection, TSP representations (Path, Adjacency, Ordinal), Cycle Crossover (CX multi-cycle), PMX, Nearest Neighbour, Greedy Edges (saturation trap), Savings Heuristic aur Ant Colony (ACO).",
+    "source": "Complete Hinglish Notes (Chapters 4 & 5) + Master E-Book"
+  },
+  {
+    "id": "week-5",
+    "week": 5,
+    "title": "Week 5: Optimal Paths — Branch & Bound, Dijkstra aur Algorithm A*",
+    "subtitle": "f(n) = g(n) + h(n), Admissibility Theorem, 3 Cases & 6 Lemmas",
+    "examWeight": "8-10 Marks in Quiz 2 / End-Term (★★★★★ Highest)",
+    "summary": "A* search Branch & Bound (cost g) aur Best First (heuristic h) ko combine karta hai: f(n) = g(n) + h(n). Admissible heuristic (kabhi overestimate nahi karta) guarantees optimal path. 6 Lemmas aur Case-3 reopen mechanics.",
+    "source": "Complete Hinglish Notes (Chapter 3) + Master E-Book"
+  },
+  {
+    "id": "week-6",
+    "week": 6,
+    "title": "Week 6: Monotone Condition, Space-Saving A* & Sequence Alignment",
+    "subtitle": "Consistent Heuristic (Case 3 Vanishes), Frontier Search & Beam Stack Search",
+    "examWeight": "4-5 Marks in Quiz 2 / End-Term",
+    "summary": "Monotone (consistent) condition: h(m) - h(n) <= k(m,n). Isse f-values non-decreasing hoti hain aur CLOSED nodes ko kabhi reopen nahi karna padta (Case 3 vanishes). Sequence alignment, Frontier Search, SMGS, BFHS, aur DCBSS.",
+    "source": "Complete Hinglish Notes (Chapter 8) + Master E-Book"
+  },
+  {
+    "id": "week-7",
+    "week": 7,
+    "title": "Week 7: Game Playing — Minimax, Alpha-Beta aur SSS*",
+    "subtitle": "2-Player Zero-Sum Games, α/β Pruning Cutoffs & Strategy Clusters",
+    "examWeight": "4-6 Marks in Quiz 2 / End-Term",
+    "summary": "Adversarial search. Max player (maximize) vs Min player (minimize). Minimax backup rule, Alpha-Beta pruning (alpha >= beta par cutoff), Knuth-Moore b^(d/2) complexity, evaluation functions, horizon effect, aur SSS* best-first game tree search.",
+    "source": "Complete Hinglish Notes (Chapter 6) + Master E-Book"
+  },
+  {
+    "id": "week-8",
+    "week": 8,
+    "title": "Week 8: Automated Domain-Independent Planning",
+    "subtitle": "STRIPS, Blocks World (5 Predicates & 4 Operators), GSP, Sussman's Anomaly & POP",
+    "examWeight": "8-10 Marks in Quiz 2 / End-Term (★★★★★ Highest)",
+    "summary": "Action-centric problem solving. STRIPS operators (preconditions, ADD, DELETE). Blocks World ke 4 operators. Forward (FSSP) vs Backward (BSSP) planning. Goal Stack Planning (GSP), Sussman's Anomaly (non-serializable subgoals), aur Partial Order Planning (POP).",
+    "source": "Complete Hinglish Notes (Chapter 7) + Master E-Book"
+  },
+  {
+    "id": "week-9",
+    "week": 9,
+    "title": "Week 9: Problem Decomposition aur Algorithm AO*",
+    "subtitle": "AND-OR Graphs, Solution Subtrees, Backed-Up Cost & Prolog Chaining",
+    "examWeight": "3-5 Marks in Quiz 2 / End-Term",
+    "summary": "Hierarchical problem solving. AND-OR trees me OR nodes alternatives hain aur AND nodes me sabhi sub-goals solve karne padte hain. Backed-up cost: AND = sum, OR = min. AO* algorithm, Means-Ends Analysis (GPS), DENDRAL expert system aur Prolog.",
+    "source": "Master E-Book (Chapter 9)"
+  },
+  {
+    "id": "week-10",
+    "week": 10,
+    "title": "Week 10: Pattern-Directed Inference Systems aur Rete Algorithm",
+    "subtitle": "Production Systems, Conflict Resolution, Discrimination Trees & Joins",
+    "examWeight": "3-4 Marks in End-Term",
+    "summary": "MoveGen ko rules me todna: pattern => action. Working Memory Elements (WMEs), Match-Resolve-Execute cycle, conflict resolution strategies (refractoriness, recency, specificity, MEA). Rete algorithm ke alpha nodes aur beta join network.",
+    "source": "Master E-Book (Chapter 10)"
+  },
+  {
+    "id": "week-11",
+    "week": 11,
+    "title": "Week 11: Constraint Satisfaction Problems (CSP)",
+    "subtitle": "CSPs <X,D,C>, Arc Consistency AC-3, Forward Checking & Waltz Algorithm",
+    "examWeight": "4-6 Marks in End-Term",
+    "summary": "CSPs search aur reasoning ko unify karta hai. Triple <X, D, C>, Map colouring, N-Queens column encoding, Backtracking with Dynamic Variable Ordering (MRV fail-first), Arc Consistency (AC-1, AC-3), Forward Checking, aur Waltz line drawing algorithm.",
+    "source": "Complete Hinglish Notes (Chapter 9) + Master E-Book (Chapter 11)"
+  },
+  {
+    "id": "week-12",
+    "week": 12,
+    "title": "Week 12: Course Revision aur Big Picture of AI",
+    "subtitle": "First Principles vs Knowledge-Based, Master Taxonomy & Complexity Matrix",
+    "examWeight": "Summary & Synthesis",
+    "summary": "Poore 12 weeks ka mahasangam. First principles (search) vs Knowledge-based (rules/memory/induction). Full algorithm comparison cheat-sheet, Bayesian networks, causality ladder, 3 reasoning forms (deduction, induction, abduction) aur final exam survival tips.",
+    "source": "Complete Hinglish Notes (Chapter 10) + Master E-Book (Chapter 12)"
+  }
+]
