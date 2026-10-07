@@ -471,6 +471,444 @@
         "calloutType": "tip",
         "title": "🔥 Exam Rule for OPEN List Manipulation",
         "content": "• DFS: Newly generated children ko OPEN ke START (Left/Top) par push karo.\n• BFS: Newly generated children ko OPEN ke END (Right/Bottom) par append karo.\n• UCS / Dijkstra: OPEN ko g(n) [cost from start] ke hisaab se sort karo."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.7 Classic State Space 1: The Rabbit Leap Problem (Graph-22)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Rabbit Leap problem (jisko Jumping Frogs Puzzle bhi kehte hain) NPTEL course ka ek classic State Space Search model hai. Do groups of rabbits ek line me khade hain aur sirf forward moves karke ek doosre ko cross karna chahte hain."
+      },
+      {
+        "type": "callout",
+        "calloutType": "theory",
+        "title": "Problem Setup & Board Configuration (n=2, Graph-22)",
+        "content": "• Board: Total 2n + 1 spots (cells/stones). For n=2: 2(2) + 1 = 5 spots [1, 2, 3, 4, 5].\n• Left side par n rabbits right face karte hain (R).\n• Right side par n rabbits left face karte hain (L).\n• Center me exactly 1 empty spot hota hai, jisko dash (-) se represent karte hain.\n• Start State: (RR-LL)  |  Goal State: (LL-RR)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Move Rule",
+          "Kaise Kaam Karta Hai?",
+          "Constraints & Exam Traps"
+        ],
+        "rows": [
+          [
+            "Forward Only (Direction Rule)",
+            "R rabbit sirf right (higher index) ja sakta hai; L rabbit sirf left (lower index) ja sakta hai.",
+            "NO BACKWARD MOVES: Koi rabbit peeche nahi mud sakta ya reverse jump nahi kar sakta."
+          ],
+          [
+            "Step / Slide (Hop by 1)",
+            "Agar immediate agla spot empty (-) hai, toh rabbit usme slide kar sakta hai.",
+            "Sirf 1 spot advance hota hai. Rabbits ka relative order change nahi hota."
+          ],
+          [
+            "Jump (Hop by 2)",
+            "Agar aage 1 rabbit baitha hai aur uske peeche empty spot (-) hai, toh rabbit us 1 rabbit ke upar se kood kar land kar sakta hai.",
+            "STRICT CONSTRAINT: Ek saath 2 ya 2 se zyada rabbits ke upar se jump marna strictly ILLEGAL hai. Empty space ke upar jump nahi hoti."
+          ],
+          [
+            "Move Notation Syntax",
+            "Course convention: 'FromRabbitTo' ya 'FromRabbit' (e.g. 2R3 ya 2R = Pos 2 par jo R hai woh Pos 3 par empty spot me jata hai).",
+            "Destination spot hamesha '-' (empty spot) hi hota hai, isliye 'To' implicit hota hai (e.g. 2R, 4L)."
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.8 Master Formulas Derivation (From First Principles)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Exam me agar n=2, n=3 ya generic n aaye, toh in mathematical formulas se direct answer nikalta hai:"
+      },
+      {
+        "type": "callout",
+        "calloutType": "theory",
+        "title": "Derivation of Master Formulas for n Rabbits Each Side",
+        "content": "1. Total Unique Arrangements = (2n + 1)! / (n! * n! * 1!)\n   • For n=2 (5 spots): 5! / (2! * 2! * 1!) = 120 / 4 = 30 arrangements.\n   • For n=3 (7 spots): 7! / (3! * 3! * 1!) = 5040 / 36 = 140 arrangements.\n\n2. Minimum Moves Formula: M = n² + 2n = n(n + 2)\n   • Step 1: Total Net Displacement = 2n * (n + 1) = 2n² + 2n distance.\n   • Step 2: Total Jumps = n² (Har R ko har L ko bypass karna hoga -> n * n = n² jumps). Jumps cover 2n² distance.\n   • Step 3: Total Steps = 2n (Bachi hui distance 2n² + 2n - 2n² = 2n steps).\n   • Total Moves M = Jumps + Steps = n² + 2n.\n   • For n=1: 1² + 2(1) = 3 moves.\n   • For n=2: 2² + 2(2) = 4 + 4 = 8 moves.\n   • For n=3: 3² + 2(3) = 9 + 6 = 15 moves."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.9 Complete 8-Move Solution Trace (Graph-22, n=2)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Step #",
+          "Current State",
+          "Move (FromRabbit)",
+          "Move Type",
+          "Next State"
+        ],
+        "rows": [
+          [
+            "1",
+            "(RR-LL)",
+            "2R",
+            "Step / Slide",
+            "(R-RLL)"
+          ],
+          [
+            "2",
+            "(R-RLL)",
+            "4L",
+            "Jump (over R)",
+            "(RLR-L)"
+          ],
+          [
+            "3",
+            "(RLR-L)",
+            "5L",
+            "Step / Slide",
+            "(RLRL-)"
+          ],
+          [
+            "4",
+            "(RLRL-)",
+            "3R",
+            "Jump (over L)",
+            "(RL-LR)"
+          ],
+          [
+            "5",
+            "(RL-LR)",
+            "1R",
+            "Jump (over L)",
+            "(-LRLR)"
+          ],
+          [
+            "6",
+            "(-LRLR)",
+            "2L",
+            "Step / Slide",
+            "(L-RLR)"
+          ],
+          [
+            "7",
+            "(L-RLR)",
+            "4R",
+            "Jump (over L)",
+            "(LLR-R)"
+          ],
+          [
+            "8",
+            "(LLR-R)",
+            "3R",
+            "Step / Slide",
+            "(LL-RR) [GOAL REACHED!]"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.10 Graph-22 Topology & Assignment Q1-Q10 Solved Drill"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Question (Assignment Drill)",
+          "Question Summary & State",
+          "Correct Answer",
+          "Detailed Step-by-Step Reasoning"
+        ],
+        "rows": [
+          [
+            "Q1: Valid moves from state",
+            "State: (LR-LR). Valid moves?",
+            "2R, 4L",
+            "Pos 2 (R) can slide right to Pos 3 (-). Pos 4 (L) can slide left to Pos 3 (-). Pos 1 (L) cannot move left (boundary). Pos 5 (R) cannot move left (backward move illegal)."
+          ],
+          [
+            "Q2: Valid moves from dead-end",
+            "State: (RLL-R). Valid moves?",
+            "NIL",
+            "Empty spot is at Pos 4. Pos 1 (R) must jump 2 rabbits (illegal). Pos 2 & 3 (L) cannot move right. Pos 5 (R) cannot move left. No legal moves exist -> Dead-end state!"
+          ],
+          [
+            "Q3: Minimum moves to goal",
+            "From (RR-LL) to (LL-RR), min moves?",
+            "8",
+            "Formula M = n² + 2n = 2² + 2(2) = 4 + 4 = 8 moves (4 Jumps + 4 Steps)."
+          ],
+          [
+            "Q4: Number of paths to goal",
+            "From (RR-LL), how many paths to (LL-RR)?",
+            "2",
+            "2 symmetric opening choices: 2R -> (R-RLL) or 4L -> (RRL-L). Each branch leads to exactly 1 deterministic optimal path to goal (1 + 1 = 2)."
+          ],
+          [
+            "Q5: Dead-end states in Graph-22",
+            "In Graph-22, how many deadend states exist?",
+            "8",
+            "Deadend = out-degree 0. Total 8: 7 permanently blocked states (-RRLL, RRLL-, RL-RL, RLL-R, -RLRL, LR-LR, R-LLR) + 1 Goal state (LL-RR)."
+          ],
+          [
+            "Q6: Total unique reachable states",
+            "In Graph-22, number of unique reachable states?",
+            "15",
+            "BFS tree traversal starting from (RR-LL) explores exactly 15 unique states across all reachable depths."
+          ],
+          [
+            "Q7: Total possible arrangements",
+            "For 2 R, 2 L, 1 empty spot, total arrangements?",
+            "30",
+            "Multiset permutation: 5! / (2! * 2! * 1!) = 120 / 4 = 30 total arrangements."
+          ],
+          [
+            "Q8: Each move has reverse move?",
+            "In Graph-22, each move has a reverse move?",
+            "False",
+            "Rabbits only jump forward. Backward moves do not exist. Graph-22 is strictly a Directed Acyclic Graph (DAG)."
+          ],
+          [
+            "Q9: Any move has reverse move?",
+            "In Graph-22, there is a move with reverse move?",
+            "False",
+            "No single directed edge in Graph-22 has an opposite reverse edge. 0% reversible."
+          ],
+          [
+            "Q10: Reach all states from any state?",
+            "From each state, reach every other state?",
+            "False",
+            "Once a dead-end or goal state is entered, out-degree is 0. Graph-22 is NOT strongly connected."
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.11 Classic State Space 2: The 12-8-5 Water Jug Problem"
+      },
+      {
+        "type": "paragraph",
+        "text": "Water Jug puzzle Khemani's lectures ka second classic State Space problem hai. Isme teen jugs a, b, c hote hain of capacities 12L, 8L, aur 5L. Total water constant rehta hai: Wa + Wb + Wc = 12 in all states. Initial state (12, 0, 0) hoti hai."
+      },
+      {
+        "type": "callout",
+        "calloutType": "theory",
+        "title": "Water Jug Transfer Operators Convention",
+        "content": "• xEy (Empty): Jug x ko pick karke jug y me poora empty kar dena.\n• xFy (Fill up / Top up): Jug x se jug y ko poora top-up/fill kar dena (y capacity reach kar leta hai).\n• Standard Representation Convention: Jab jug x ko jug y me empty karne se jug y bhi fill ho jaye aur x bhi empty ho jaye, tab xFy ko ignore karke xEy likhte hain.\n• Edge Types in State Space Graph: Thick undirected edges = Two-way reversible moves; Thin directed edges = One-way irreversible moves."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.12 12-8-5 Water Jug Assignment Q1-Q14 Solved Drill"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Question",
+          "Query & State",
+          "Correct Answer",
+          "Detailed Step-by-Step Breakdown"
+        ],
+        "rows": [
+          [
+            "Q1: State validity check",
+            "State: (5, 3, 5)",
+            "invalid",
+            "Total water invariant: Wa + Wb + Wc = 5 + 3 + 5 = 13 ≠ 12. Total water must always sum to 12L!"
+          ],
+          [
+            "Q2: State tuple meaning",
+            "The state (4, 3, 5) denotes?",
+            "amount of water in jugs a, b and c",
+            "State tuple (Wa, Wb, Wc) represents the current amount of water in jugs a, b, and c, NOT their capacities (which are fixed at 12, 8, 5)."
+          ],
+          [
+            "Q3: Transfer representation",
+            "From (4, 3, 5) which move takes to (4, 8, 0)?",
+            "cEb",
+            "Jug c has 5L, jug b has 3L. Pouring c into b gives 3 + 5 = 8L in b and 0 in c. Because c becomes empty and b fills up simultaneously, the standard notation is cEb."
+          ],
+          [
+            "Q4: Move outcome",
+            "From (4, 3, 5) the move aEb leads to?",
+            "(0, 7, 5)",
+            "Jug a (4L) is emptied into jug b (3L). 3 + 4 = 7L ≤ 8L (capacity of b). Jug a becomes 0L, jug b becomes 7L, jug c remains 5L."
+          ],
+          [
+            "Q5: Reverse move identity",
+            "From (4, 3, 5), cEa leads to X=(9, 3, 0). Reverse move?",
+            "aFc",
+            "From X=(9, 3, 0), to get back to (4, 3, 5), we must fill jug c (capacity 5L) from jug a. Therefore, the reverse move is aFc (pickup a, fill c)."
+          ],
+          [
+            "Q6: Move sequence to target",
+            "Move sequences from (7, 0, 5) to (4, 8, 0)?",
+            "cEa, aFb | aEb, cFb, cEa | aEb, cFb, bEa, cEb, aFb",
+            "Multiple legal paths exist: Path 1: (7,0,5) -cEa-> (12,0,0) -aFb-> (4,8,0). Path 2: (7,0,5) -aEb-> (0,7,5) -cFb-> (0,8,4) -cEa-> (4,8,0)."
+          ],
+          [
+            "Q7: Move sequence execution",
+            "From (7, 0, 5), apply aEb, cEa, bFc",
+            "(5, 2, 5)",
+            "Trace: (7,0,5) -aEb-> (0,7,5) -cEa-> (5,7,0) -bFc-> (5,2,5) (fill jug c with 5L from jug b, leaving 7 - 5 = 2L in b)."
+          ],
+          [
+            "Q8: MoveGen successors",
+            "From (7, 0, 5), MoveGen will return?",
+            "(0,7,5):(7,5,0):(12,0,0):[]",
+            "Legal transfers: aEb gives (0,7,5); cEb gives (7,5,0); cEa gives (12,0,0). MoveGen returns these 3 reachable states."
+          ],
+          [
+            "Q9: Min moves forward",
+            "Min moves from (7, 0, 5) to (5, 2, 5)?",
+            "3",
+            "Optimal 3-step sequence: (7,0,5) -aEb-> (0,7,5) -cEa-> (5,7,0) -bFc-> (5,2,5). Min distance = 3."
+          ],
+          [
+            "Q10: Min moves backward (Asymmetry!)",
+            "Min moves from (5, 2, 5) to (7, 0, 5)?",
+            "1",
+            "ASYMMETRY TRAP: To go back, simply empty jug b (2L) into jug a (5L): 5 + 2 = 7L in a, 0 in b, 5 in c -> (7,0,5) via a single move bEa! Distance is 1!"
+          ],
+          [
+            "Q11: Measuring integral volumes",
+            "Can we measure integral volumes 1L, 2L, ..., 11L in a single jug?",
+            "Yes",
+            "Looking across all reachable states: 1L (in 3,8,1), 2L (in 2,5,5), 3L (in 4,3,5), 4L (in 4,8,0), 5L (in 7,0,5), 6L (in 6,6,0), 7L (in 7,5,0), 8L (in 4,8,0), 9L (in 9,3,0), 10L (in 10,0,2), 11L (in 11,0,1). All 1L to 11L are measurable!"
+          ],
+          [
+            "Q12: All moves reversible?",
+            "In 12-8-5 state space, does each move have a reverse move?",
+            "No",
+            "Thin directed edges denote one-way irreversible transfers. Not all moves are two-way reversible."
+          ],
+          [
+            "Q13: Strongly connected component?",
+            "From each state, can we reach every other state?",
+            "Yes",
+            "The reachable state space forms a strongly connected component: directed cycles exist connecting all reachable states."
+          ],
+          [
+            "Q14: Uniform branching factor?",
+            "Does MoveGen return exactly 4 neighbours for each state?",
+            "No",
+            "Out-degrees vary: e.g. (12,0,0) has 2 moves (aFb, aFc), (7,0,5) has 3 moves, and some intermediate states have 4 moves."
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.13 Master Comparison Table: Water Jug vs. Rabbit Leap Puzzle"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Architectural Property",
+          "Water Jug Puzzle (12-8-5 / 8-5-3)",
+          "Rabbit Leap Puzzle (Graph-22)"
+        ],
+        "rows": [
+          [
+            "Edge Directionality",
+            "Mixed: Undirected (reversible moves) + Directed (irreversible moves)",
+            "Strictly Directed: Every single transition is one-way forward only"
+          ],
+          [
+            "Cycles & Loops",
+            "Cycles exist: Can return to previously visited states",
+            "Strictly Acyclic: Directed Acyclic Graph (DAG), ZERO cycles"
+          ],
+          [
+            "Reversibility Percentage",
+            "Partially Reversible: Many pours can be undone",
+            "0% Reversible: Rabbits cannot step or jump backward"
+          ],
+          [
+            "All-Pairs Reachability",
+            "Yes: Strongly connected component within reachable states",
+            "False: 8 states have out-degree 0 (cannot leave them)"
+          ],
+          [
+            "Terminal / Dead-End States",
+            "0 Dead-ends: System never gets permanently stuck",
+            "8 Dead-ends: 7 permanently blocked deadlock states + 1 goal state"
+          ],
+          [
+            "Asymmetric Distances",
+            "Present: (7,0,5)->(5,2,5) is 3 moves, but (5,2,5)->(7,0,5) is 1 move",
+            "Infinite: Backward distance is undefined (infinity)"
+          ],
+          [
+            "Branching Factor",
+            "Dynamic (varies from 2 to 4)",
+            "Dynamic (varies from 0 at dead-ends to 4 at root)"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2.14 Quick Exam Revision Cheat-Sheet (Rabbit Leap Formulas)"
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Metric / Question Type",
+          "Mathematical Formula",
+          "Value for n=2 (5 Spots)",
+          "Value for n=3 (7 Spots)"
+        ],
+        "rows": [
+          [
+            "Minimum Moves to Goal",
+            "M = n² + 2n = n(n + 2)",
+            "8 moves",
+            "15 moves"
+          ],
+          [
+            "Total Jumps Count",
+            "Jumps = n²",
+            "4 jumps",
+            "9 jumps"
+          ],
+          [
+            "Total Steps / Slides Count",
+            "Steps = 2n",
+            "4 steps",
+            "6 steps"
+          ],
+          [
+            "Total Possible State Space",
+            "(2n + 1)! / (n!)²",
+            "30 states",
+            "140 states"
+          ],
+          [
+            "Reachable Unique States",
+            "BFS reachable from start",
+            "15 states",
+            "63 states"
+          ],
+          [
+            "Dead-End States (Out-degree 0)",
+            "7 blocked + 1 goal",
+            "8 states",
+            "Varies with n"
+          ],
+          [
+            "Symmetric Solution Paths",
+            "Left opening vs Right opening",
+            "2 paths",
+            "2 paths"
+          ],
+          [
+            "Graph Classification",
+            "DAG (Directed Acyclic Graph)",
+            "Irreversible",
+            "Irreversible"
+          ]
+        ]
       }
     ]
   },
