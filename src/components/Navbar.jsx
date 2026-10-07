@@ -11,7 +11,9 @@ import {
   Menu, 
   X,
   BookmarkCheck,
-  Compass
+  Compass,
+  PanelLeftClose,
+  PanelLeft
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -39,12 +41,13 @@ export default function Navbar({
     <header className="top-navbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <button 
-          className="nav-icon-btn" 
+          className={`nav-icon-btn ${sidebarOpen ? 'active' : ''}`}
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          title="Toggle Sidebar"
+          title={sidebarOpen ? "Collapse Sidebar (Ctrl+B)" : "Expand Sidebar (Ctrl+B)"}
+          aria-label="Toggle Sidebar"
           style={{ display: 'flex' }}
         >
-          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          {sidebarOpen ? <PanelLeftClose size={19} /> : <PanelLeft size={19} />}
         </button>
 
         <div className="nav-brand" onClick={() => setCurrentTab('notes')} style={{ cursor: 'pointer' }}>

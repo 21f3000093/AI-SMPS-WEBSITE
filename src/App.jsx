@@ -22,7 +22,13 @@ export default function App() {
   const [selectedVisualizer, setSelectedVisualizer] = useState('search');
   const [selectedPaperId, setSelectedPaperId] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    const saved = localStorage.getItem('ai_smps_sidebar_open');
+    if (saved !== null) {
+      return saved === 'true';
+    }
+    return typeof window !== 'undefined' ? window.innerWidth >= 850 : true;
+  });
 
   // Bookmarks & Completed tracking
   const [bookmarks, setBookmarks] = useState(() => {
@@ -45,6 +51,22 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('ai_smps_theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem('ai_smps_sidebar_open', String(sidebarOpen));
+  }, [sidebarOpen]);
+
+  // Keyboard shortcut Ctrl+B or Cmd+B to toggle sidebar
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        setSidebarOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('ai_smps_bookmarks', JSON.stringify(bookmarks));
@@ -95,23 +117,17 @@ export default function App() {
           setSelectedVisualizer={setSelectedVisualizer}
           selectedPaperId={selectedPaperId}
           setSelectedPaperId={setSelectedPaperId}
-          mobileOpen={sidebarOpen}
-          closeMobileSidebar={() => setSidebarOpen(false)}
+          sidebarOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
           completedModules={completedModules}
         />
 
-        {/* Backdrop for mobile */}
+        {/* Backdrop for mobile drawer ONLY - strictly hidden on desktop via CSS class */}
         {sidebarOpen && (
           <div
+            className="sidebar-backdrop"
             onClick={() => setSidebarOpen(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              top: 'var(--header-height)',
-              background: 'rgba(0, 0, 0, 0.5)',
-              backdropFilter: 'blur(4px)',
-              zIndex: 80
-            }}
+            aria-label="Close sidebar"
           />
         )}
 

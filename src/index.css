@@ -93,8 +93,8 @@ html, body {
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -146,24 +146,46 @@ code, pre, .font-mono {
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   position: relative;
 }
 
 .main-layout {
   display: flex;
   margin-top: var(--header-height);
-  min-height: calc(100vh - var(--header-height));
+  height: calc(100vh - var(--header-height));
+  width: 100%;
+  overflow: hidden;
   position: relative;
 }
 
 .content-area {
   flex: 1;
-  padding: 24px 32px 64px;
-  max-width: 1200px;
-  margin: 0 auto;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 32px 80px;
   width: 100%;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
   animation: fadeIn 0.3s ease-out;
+}
+
+.content-area::-webkit-scrollbar {
+  width: 6px;
+}
+.content-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.content-area::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+.content-area::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
 }
 
 @keyframes fadeIn {
@@ -278,18 +300,98 @@ code, pre, .font-mono {
 /* Sidebar */
 .app-sidebar {
   width: var(--sidebar-width);
-  height: calc(100vh - var(--header-height));
-  position: sticky;
-  top: var(--header-height);
+  height: 100%;
   background: var(--bg-surface);
   border-right: 1px solid var(--border-subtle);
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  padding: 16px 12px;
+  padding: 12px;
   flex-shrink: 0;
-  transition: transform var(--transition-normal);
+  z-index: 50;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease,
+              transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
 }
+
+.app-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.app-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.app-sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* Sidebar Header Control */
+.sidebar-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 10px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sidebar-header-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.sidebar-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-close-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+}
+
+/* Desktop Collapsed State */
+.app-sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-right: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Backdrop for Mobile Drawer ONLY - completely hidden on desktop */
+.sidebar-backdrop {
+  display: none;
+}
+
 
 .sidebar-section-title {
   font-size: 11px;
@@ -725,21 +827,54 @@ code, pre, .font-mono {
 }
 
 /* Responsive Overrides */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
+  .desktop-tabs {
+    display: none !important;
+  }
+
   .app-sidebar {
     position: fixed;
     left: 0;
     top: var(--header-height);
     bottom: 0;
-    z-index: 90;
+    height: calc(100vh - var(--header-height));
+    width: 290px !important;
+    max-width: 85vw !important;
+    z-index: 95;
     transform: translateX(-100%);
+    box-shadow: none;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .app-sidebar.mobile-open {
-    transform: translateX(0);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+
+  .app-sidebar.open {
+    transform: translateX(0) !important;
+    box-shadow: 0 0 36px rgba(0, 0, 0, 0.7);
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    padding: 12px !important;
+    border-right: 1px solid var(--border-subtle) !important;
   }
+
+  .app-sidebar.collapsed {
+    transform: translateX(-100%) !important;
+    width: 290px !important;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: var(--header-height);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 90;
+    animation: fadeIn 0.2s ease-out;
+  }
+
   .content-area {
-    padding: 16px 16px 48px;
+    padding: 16px 14px 64px;
   }
 }
+
 

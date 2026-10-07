@@ -11,7 +11,8 @@ import {
   Compass, 
   Layers, 
   AlertTriangle,
-  PlayCircle
+  PlayCircle,
+  PanelLeftClose
 } from 'lucide-react';
 import { courseModules } from '../data/notesData.js';
 import { pyqPapers } from '../data/pyqData.js';
@@ -25,12 +26,34 @@ export default function Sidebar({
   setSelectedVisualizer,
   selectedPaperId,
   setSelectedPaperId,
+  sidebarOpen,
   mobileOpen,
+  isOpen,
+  onClose,
   closeMobileSidebar,
   completedModules = []
 }) {
+  const isExpanded = sidebarOpen ?? isOpen ?? mobileOpen ?? true;
+  const handleClose = onClose || closeMobileSidebar || (() => {});
+
   return (
-    <aside className={`app-sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
+    <aside className={`app-sidebar ${isExpanded ? 'open' : 'collapsed'}`}>
+      {/* Sidebar Header with Quick Collapse */}
+      <div className="sidebar-header-row">
+        <div className="sidebar-header-title">
+          <Layers size={14} style={{ color: 'var(--accent-cyan)' }} />
+          <span>Course Navigator</span>
+        </div>
+        <button
+          className="sidebar-close-btn"
+          onClick={handleClose}
+          title="Collapse Sidebar (Ctrl+B)"
+          aria-label="Collapse Sidebar"
+        >
+          <PanelLeftClose size={16} />
+        </button>
+      </div>
+
       {/* SECTION 1: HINGLISH STUDY NOTES */}
       <div className="sidebar-section-title">
         <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
